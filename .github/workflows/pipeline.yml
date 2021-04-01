@@ -1,4 +1,4 @@
-name: Lint and test
+name: Lint, test and upload coverage to Codecov
 
 on: [push]
 
@@ -9,9 +9,9 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Set up Python 3.7
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@master
       with:
         python-version: 3.7
     - name: Install dependencies
@@ -23,3 +23,8 @@ jobs:
     - name: Test
       run: |
         make test
+    - name: Generate coverage report
+      run: |
+        make coverage
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@master

@@ -34,10 +34,13 @@ class Config:
     def merge_config(self, patch: ConfigDict) -> None:
         for key, value in patch.items():
             if isinstance(value, dict):
-                if isinstance(self._config[key], Config):
-                    self._config[key].merge_config(value)
-                    continue
-                else:
+                try:
+                    if isinstance(self._config[key], Config):
+                        self._config[key].merge_config(value)
+                        continue
+                    else:
+                        value = Config(value)
+                except KeyError:
                     value = Config(value)
 
             self._config[key] = value

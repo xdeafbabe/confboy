@@ -9,3 +9,5 @@ coverage
 *.eggs
 !.gitignore
 !.github
+build
+dist

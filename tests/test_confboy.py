@@ -1,3 +1,5 @@
+import pathlib
+
 import pytest
 
 import confboy
@@ -106,3 +108,25 @@ def test_callables():
     )
 
     assert config.a_plus_b == 3
+
+
+def test_merge_toml_config():
+    path = str(pathlib.Path(__file__).parent.absolute() / 'test_config.toml')
+    config = confboy.Config(toml_config_path=path)
+
+    assert config.key == 'value'
+    assert config.nested.one == 1
+    assert config.nested.two == 2
+
+
+def test_merge_invalid_toml_config():
+    path = str(
+        pathlib.Path(__file__).parent.absolute() / 'test_invalid_config.toml')
+
+    with pytest.raises(confboy.InvalidConfigFileError):
+        confboy.Config(toml_config_path=path)
+
+
+def test_merge_nonexistent_toml_config():
+    with pytest.raises(FileNotFoundError):
+        confboy.Config(toml_config_path='/nonexistent_file')

@@ -84,9 +84,25 @@ def test_delete_config_key():
         config.key
 
 
-# def test_callables():
-#     pass
+def test_callables():
+    def add(a, b):
+        return a + b
 
-#     config = confboy.Config(
-#         base_config={'a': 1, 'b': 2},
-#         callables={
+    config = confboy.Config(
+        base_config={
+            'a': {'a': 1},
+            'b': 2,
+            'a_plus_b': 'callable:add',
+        },
+        callables={
+            'add': {
+                'func': add,
+                'kwargs': {
+                    'a': 'a.a',
+                    'b': 'b',
+                },
+            },
+        }
+    )
+
+    assert config.a_plus_b == 3

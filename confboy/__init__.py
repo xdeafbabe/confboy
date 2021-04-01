@@ -3,8 +3,13 @@ import typing
 import toml
 
 
+class CallableDictItem(typing.TypedDict):
+    func: typing.Callable
+    kwargs: typing.Dict[str, str]
+
+
 ConfigDict = typing.Dict[str, typing.Any]
-CallableDict = typing.Dict[str, typing.Callable]
+CallableDict = typing.Dict[str, CallableDictItem]
 
 
 class InvalidConfigFileError(Exception):
@@ -52,7 +57,13 @@ class Config:
             parts = value.split(':')
 
             if len(parts) == 2 and parts[0] == 'callable':
-                return self._callables[parts[1]]()
+                callable_ = self._callables[parts[1]]
+                kwargs = {}
+
+                for key, value in callable_['kwargs'].items():
+                    kwargs[key] = self._get_item_by_full_path(value)
+
+                return callable_['func'](**kwargs)
 
         return value
 
@@ -67,3 +78,12 @@ class Config:
 
     def __delattr__(self, key: str) -> None:
         del self._config[key]
+
+    def _get_item_by_full_path(self, path: str) -> typing.Any:
+        split = path.split('.', maxsplit=2)
+        value = self.__getattr__(split[0])
+
+        if len(split) == 1:
+            return value
+        else:
+            return value._get_item_by_full_path(split[1])

@@ -3,21 +3,21 @@ import pytest
 import confboy
 
 
-def test_confboy_get_and_set_values():
+def test_get_and_set_values():
     config = confboy.Config()
     config.key = 'value'
 
     assert config.key == 'value'
 
 
-def test_confboy_get_nonexistent_value():
+def test_get_nonexistent_value():
     config = confboy.Config()
 
     with pytest.raises(KeyError):
         config.nonexistent_key
 
 
-def test_confboy_merge_configs():
+def test_merge_configs():
     config = confboy.Config()
     config.merge_config({'key_1': 'value_1', 'key_2': 'value_2'})
 
@@ -25,7 +25,7 @@ def test_confboy_merge_configs():
     assert config.key_2 == 'value_2'
 
 
-def test_confboy_merge_nested_configs():
+def test_merge_nested_configs():
     config = confboy.Config()
     config.merge_config({
         'outer': {
@@ -36,7 +36,7 @@ def test_confboy_merge_nested_configs():
     assert config.outer.inner == 'value'
 
 
-def test_confboy_merge_nested_configs_with_nested_config():
+def test_merge_nested_configs_with_nested_config():
     config = confboy.Config()
     config.merge_config({
         'outer': {
@@ -45,6 +45,7 @@ def test_confboy_merge_nested_configs_with_nested_config():
         },
         'outer_1': 'outer_value_1',
         'outer_2': 'outdated',
+        'nested': False,
     })
 
     config.merge_config({
@@ -53,6 +54,9 @@ def test_confboy_merge_nested_configs_with_nested_config():
             'inner_3': 'value_3',
         },
         'outer_2': 'outer_value_2',
+        'nested': {
+            'key': 'value',
+        },
     })
 
     assert config.outer.inner_1 == 'value_1'
@@ -60,3 +64,29 @@ def test_confboy_merge_nested_configs_with_nested_config():
     assert config.outer.inner_3 == 'value_3'
     assert config.outer_1 == 'outer_value_1'
     assert config.outer_2 == 'outer_value_2'
+    assert config.nested.key == 'value'
+
+
+def test_set_nested_value():
+    config = confboy.Config()
+    config.nested = {'one': 1, 'two': 2}
+
+    assert config.nested.one == 1
+    assert config.nested.two == 2
+
+
+def test_delete_config_key():
+    config = confboy.Config()
+    config.key = 'value'
+    del config.key
+
+    with pytest.raises(KeyError):
+        config.key
+
+
+# def test_callables():
+#     pass
+
+#     config = confboy.Config(
+#         base_config={'a': 1, 'b': 2},
+#         callables={

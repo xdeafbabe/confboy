@@ -32,14 +32,9 @@ setuptools.setup(
             'flake8==3.9.0',
         ],
         'test': [
-            'pytest-asyncio==0.14.0',
             'pytest-cov==2.11.1',
-            'pytest-freezegun==0.4.2',
             'pytest-mock==3.5.1',
             'pytest==6.2.2',
         ],
-    },
-    entry_points={
-        'console_scripts': [],
     },
 )

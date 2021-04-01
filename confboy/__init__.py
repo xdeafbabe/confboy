@@ -43,9 +43,6 @@ class Config:
             self._config[key] = value
 
     def __getattr__(self, key: str) -> typing.Any:
-        if key in ('_callables', '_config'):
-            return super().__getattribute__(key)
-
         value = self._config[key]
 
         if isinstance(value, str):

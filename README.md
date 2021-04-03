@@ -29,7 +29,7 @@ base_config = {
 config = confboy.Config(base_config)
 
 config.nested.one  # Returns `1`
-config.three  # Returns `2`
+config.three       # Returns `3`
 ```
 
 Although it is advised not to change the config

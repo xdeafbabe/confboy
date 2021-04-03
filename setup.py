@@ -1,7 +1,7 @@
 import setuptools
 
 
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 
 
 setuptools.setup(
@@ -16,6 +16,7 @@ setuptools.setup(
     author_email='kysput@gmail.com',
     classifiers=[
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'License :: OSI Approved :: MIT License',
@@ -24,7 +25,7 @@ setuptools.setup(
     project_urls={
         'Repository': 'https://github.com/Euromance/confboy',
     },
-    python_requires='>=3.8,<4.0',
+    python_requires='>=3.7,<4.0',
     install_requires=[
         'toml==0.10.2',
     ],

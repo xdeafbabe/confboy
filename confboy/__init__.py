@@ -3,13 +3,8 @@ import typing
 import toml
 
 
-class CallableDictItem(typing.TypedDict):
-    func: typing.Callable
-    kwargs: typing.Dict[str, str]
-
-
 ConfigDict = typing.Dict[str, typing.Any]
-CallableDict = typing.Dict[str, CallableDictItem]
+CallableDict = typing.Dict[str, typing.Dict[str, typing.Any]]
 
 
 class InvalidConfigFileError(Exception):

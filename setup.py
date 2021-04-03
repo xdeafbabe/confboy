@@ -1,7 +1,7 @@
 import setuptools
 
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 
 setuptools.setup(
@@ -35,7 +35,6 @@ setuptools.setup(
         ],
         'test': [
             'pytest-cov==2.11.1',
-            'pytest-mock==3.5.1',
             'pytest==6.2.2',
         ],
     },

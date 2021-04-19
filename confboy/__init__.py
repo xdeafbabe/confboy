@@ -30,6 +30,8 @@ class Config:
                     self.merge_config(patch)
             except toml.TomlDecodeError as e:
                 raise InvalidConfigFileError from e
+            except FileNotFoundError:
+                pass
 
     def merge_config(self, patch: ConfigDict) -> None:
         for key, value in patch.items():

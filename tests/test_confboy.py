@@ -104,7 +104,7 @@ def test_callables():
                     'b': 'b',
                 },
             },
-        }
+        },
     )
 
     assert config.a_plus_b == 3
@@ -128,5 +128,5 @@ def test_merge_invalid_toml_config():
 
 
 def test_merge_nonexistent_toml_config():
-    with pytest.raises(FileNotFoundError):
-        confboy.Config(toml_config_path='/nonexistent_file')
+    config = confboy.Config(toml_config_path='/nonexistent_file')
+    assert config._config == {}

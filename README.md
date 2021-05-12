@@ -51,26 +51,18 @@ change `config.postgres.user` and `config.postgres.url`
 will be rebuilt on every query if it's a callable.
 
 ```python
-def add(a, b):
-    return a + b
+config = confboy.Config({
+    'a': {'a': 1},
+    'b': 2,
+    'a_plus_b': 'callable:add',  # Tell confboy to call `add` from provided callables
+})
 
-config = confboy.Config(
-    base_config={
-        'a': {'a': 1},
-        'b': 2,
-        'a_plus_b': 'callable:add',  # Tell confboy to call `add` from provided callables
-    },
-    callables={
-        'add': {
-            'func': add,
-            'kwargs': {              # Define kwargs and value paths for them
-                'a': 'a.a',
-                'b': 'b',
-            },
-        },
-    }
-)
 
+def add():
+    return config.a.a + config.b
+
+
+config.register_callable(add)
 config.a_plus_b  # Returns 3
 ```
 

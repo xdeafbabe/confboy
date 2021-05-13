@@ -90,3 +90,18 @@ is present in the config but not in patch,
 it won't be deleted from the config.
 It supports value deletion and everything.
 Just try it out or check the source code!
+
+
+## Async functions as callables
+
+Currently `confboy` does not support asynchronous functions
+as callables. That would bring interface inconsistency
+like `await config.foo` vs `config.foo`. You can wrap
+your asynchronous function like that:
+
+```python
+config.register_callable(
+    functools.partial(asyncio.run, async_func()))
+```
+
+Although that'd block the event loop.

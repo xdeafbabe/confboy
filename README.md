@@ -49,10 +49,10 @@ You can use it to build connection URLs or whatever.
 Shines with changing config during runtime:
 change `config.postgres.user` and `config.postgres.url`
 will be rebuilt on every query if it's a callable.
-You can do various things with it including
-mapping and filtering values the app got
-from the TOML config, cast types,
-whatever comes to your mind.
+You can do various things with it including mapping
+and filtering values the app got from the TOML config,
+cast types, whatever comes to your mind.
+Callables work on any nested level.
 
 ```python
 config = confboy.Config({
@@ -69,11 +69,6 @@ def add():
 config.register_callable(add)
 config.a_plus_b  # Returns 3
 ```
-
-**IMPORTANT!**
-
-As of now, `confboy` only supports callables at the top level.
-Work on making callables available is in progress.
 
 Confboy can take values from TOML files as well.
 Provided config will be merged over base config.

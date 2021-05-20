@@ -101,6 +101,21 @@ def test_callables():
     assert config.a_plus_b == 3
 
 
+def test_nested_callables():
+    config = confboy.Config({
+        'a': {
+            'b': 'callable:five',
+        },
+    })
+
+    def five():
+        return 5
+
+    config.register_callable(five)
+
+    assert config.a.b == 5
+
+
 def test_merge_toml_config():
     path = str(pathlib.Path(__file__).parent.absolute() / 'test_config.toml')
     config = confboy.Config(toml_config_path=path)

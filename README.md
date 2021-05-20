@@ -2,6 +2,7 @@
 
 [![Code coverage](https://codecov.io/gh/Euromance/confboy/branch/master/graph/badge.svg?token=O5LFEZO8WM)](https://codecov.io/gh/Euromance/confboy)
 [![Weekly downloads](https://pepy.tech/badge/confboy/week)](https://pepy.tech/project/confboy)
+![CI status](https://github.com/Euromance/confboy/actions/workflows/pipeline.yml/badge.svg)
 
 Better configs with TOML support.
 
